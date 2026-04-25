@@ -474,6 +474,47 @@ export default function Home() {
           {/* ──────── RIGHT COLUMN ──────── */}
           <div className="flex-1 flex flex-col gap-4">
 
+            {/* Teacher Login form — inline */}
+            <div className="bg-white rounded-2xl shadow-xl p-5">
+              <h2 className="text-lg font-black text-purple-800 mb-4 flex items-center gap-2">
+                👩‍🏫 Teacher Login
+              </h2>
+              <form onSubmit={handleLogin} className="space-y-3">
+                <div>
+                  <label className="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wide">Email</label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="your@email.com"
+                    className="w-full border-2 border-gray-200 focus:border-purple-500 rounded-xl px-4 py-2.5 text-sm outline-none transition"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wide">Password</label>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full border-2 border-gray-200 focus:border-purple-500 rounded-xl px-4 py-2.5 text-sm outline-none transition"
+                    required
+                  />
+                </div>
+                {error && (
+                  <p className="text-red-500 text-xs font-semibold bg-red-50 rounded-lg px-3 py-2">{error}</p>
+                )}
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-purple-800 hover:bg-purple-900 disabled:opacity-50 text-white font-black py-3 rounded-xl text-base shadow-lg transition active:scale-95"
+                >
+                  {loading ? "Logging in…" : "Login →"}
+                </button>
+              </form>
+            </div>
+
             {/* Book + badges */}
             <div className="flex gap-4 items-start">
               <div className="kid-float-2 flex-shrink-0">
@@ -519,46 +560,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Teacher Login form — inline */}
-            <div className="bg-white rounded-2xl shadow-xl p-5">
-              <h2 className="text-lg font-black text-purple-800 mb-4 flex items-center gap-2">
-                👩‍🏫 Teacher Login
-              </h2>
-              <form onSubmit={handleLogin} className="space-y-3">
-                <div>
-                  <label className="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wide">Email</label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="your@email.com"
-                    className="w-full border-2 border-gray-200 focus:border-purple-500 rounded-xl px-4 py-2.5 text-sm outline-none transition"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wide">Password</label>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
-                    className="w-full border-2 border-gray-200 focus:border-purple-500 rounded-xl px-4 py-2.5 text-sm outline-none transition"
-                    required
-                  />
-                </div>
-                {error && (
-                  <p className="text-red-500 text-xs font-semibold bg-red-50 rounded-lg px-3 py-2">{error}</p>
-                )}
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full bg-purple-800 hover:bg-purple-900 disabled:opacity-50 text-white font-black py-3 rounded-xl text-base shadow-lg transition active:scale-95"
-                >
-                  {loading ? "Logging in…" : "Login →"}
-                </button>
-              </form>
-            </div>
           </div>
         </div>
       </div>
