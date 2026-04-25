@@ -1,3 +1,6 @@
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 /* ─────────────────────────────────────────
@@ -337,6 +340,33 @@ function WeekCard({ week, title, color }: { week: string; title: string; color: 
    PAGE
 ───────────────────────────────────────── */
 export default function Home() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleLogin(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Login failed");
+      localStorage.setItem("kss_token", data.token);
+      router.push("/dashboard");
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <main className="min-h-screen bg-yellow-400 font-sans overflow-x-hidden">
 
@@ -484,13 +514,46 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Teacher Login — right column */}
-            <Link
-              href="/login"
-              className="block bg-purple-800 hover:bg-purple-900 active:scale-95 text-white font-black py-5 rounded-2xl text-lg md:text-xl shadow-xl transition-all duration-150 text-center"
-            >
-              👩‍🏫 Teacher Login
-            </Link>
+            {/* Teacher Login form — inline */}
+            <div className="bg-white rounded-2xl shadow-xl p-5">
+              <h2 className="text-lg font-black text-purple-800 mb-4 flex items-center gap-2">
+                👩‍🏫 Teacher Login
+              </h2>
+              <form onSubmit={handleLogin} className="space-y-3">
+                <div>
+                  <label className="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wide">Email</label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="your@email.com"
+                    className="w-full border-2 border-gray-200 focus:border-purple-500 rounded-xl px-4 py-2.5 text-sm outline-none transition"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wide">Password</label>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full border-2 border-gray-200 focus:border-purple-500 rounded-xl px-4 py-2.5 text-sm outline-none transition"
+                    required
+                  />
+                </div>
+                {error && (
+                  <p className="text-red-500 text-xs font-semibold bg-red-50 rounded-lg px-3 py-2">{error}</p>
+                )}
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-purple-800 hover:bg-purple-900 disabled:opacity-50 text-white font-black py-3 rounded-xl text-base shadow-lg transition active:scale-95"
+                >
+                  {loading ? "Logging in…" : "Login →"}
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
