@@ -440,13 +440,6 @@ export default function Home() {
           {/* ──────── RIGHT COLUMN ──────── */}
           <div className="flex-1 flex flex-col gap-4">
 
-            {/* Week cards */}
-            <div className="grid grid-cols-3 gap-3">
-              <WeekCard week="WEEK 1" title="Blessed to be a Blessing"  color="bg-orange-500" />
-              <WeekCard week="WEEK 2" title="Obedience Pleases God"     color="bg-green-600" />
-              <WeekCard week="WEEK 3" title="God&apos;s Power Helps Us" color="bg-blue-600" />
-            </div>
-
             {/* Book + badges */}
             <div className="flex gap-4 items-start">
               <div className="kid-float-2 flex-shrink-0">
@@ -490,6 +483,14 @@ export default function Home() {
                 ))}
               </div>
             </div>
+
+            {/* Teacher Login — right column */}
+            <Link
+              href="/login"
+              className="block bg-purple-800 hover:bg-purple-900 active:scale-95 text-white font-black py-5 rounded-2xl text-lg md:text-xl shadow-xl transition-all duration-150 text-center"
+            >
+              👩‍🏫 Teacher Login
+            </Link>
           </div>
         </div>
       </div>
@@ -516,15 +517,9 @@ export default function Home() {
               </span>
             ))}
           </div>
-          <p className="text-gray-600 text-sm md:text-base font-semibold mb-6 max-w-lg mx-auto">
+          <p className="text-gray-600 text-sm md:text-base font-semibold max-w-lg mx-auto">
             Help children grow in faith and live like little disciples of Jesus!
           </p>
-          <Link
-            href="/login"
-            className="inline-block bg-purple-800 hover:bg-purple-900 active:scale-95 text-white font-black py-4 px-12 rounded-2xl text-lg md:text-xl shadow-xl transition-all duration-150"
-          >
-            👩‍🏫 Teacher Login
-          </Link>
         </div>
       </div>
 
