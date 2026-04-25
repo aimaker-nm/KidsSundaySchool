@@ -21,6 +21,14 @@
   .border-age-13-19 { border-color: #ec4899; }
 }
 
+@keyframes float-up {
+  from { transform: translateY(0px); }
+  to   { transform: translateY(-6px); }
+}
+.animate-float {
+  animation: float-up 1.2s ease-in-out infinite alternate;
+}
+
 @media print {
   .no-print { display: none; }
   .print-page { page-break-after: always; }
