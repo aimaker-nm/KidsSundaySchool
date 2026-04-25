@@ -306,7 +306,7 @@ function BookStack() {
       <text x="40" y="49" fontSize="20" fill="white">👑</text>
       <text x="20" y="72" fontSize="12" fill="white" fontWeight="900">Little</text>
       <text x="14" y="86" fontSize="12" fill="white" fontWeight="900">Disciples</text>
-      <text x="18" y="100" fontSize="8" fill="#a5d6a7" fontWeight="bold">Weeks 1–3</text>
+      <text x="18" y="100" fontSize="7" fill="#a5d6a7" fontWeight="bold">God&apos;s Word Daily</text>
       <line x1="18" y1="104" x2="85" y2="104" stroke="#a5d6a7" strokeWidth="1" opacity="0.7" />
       <text x="18" y="114" fontSize="7" fill="#c8e6c9" opacity="0.8">A Global Curriculum</text>
     </svg>
@@ -372,7 +372,7 @@ export default function Home() {
 
       {/* Top banner */}
       <div className="bg-purple-800 text-white text-center py-2 px-4 text-xs font-black tracking-widest">
-        ★&nbsp;&nbsp;3 FULL WEEKS OF COMPLETE LESSONS&nbsp;&nbsp;★
+        ✝&nbsp;&nbsp;ROOTED IN GOD&apos;S WORD • BUILT ON FAITH • GROWING IN JESUS&nbsp;&nbsp;✝
       </div>
 
       {/* ═══ HERO — 2 columns on desktop ═══ */}
@@ -396,10 +396,10 @@ export default function Home() {
                   Little<br />Disciples
                 </h1>
                 <span className="inline-block bg-green-500 text-white text-xs md:text-sm font-bold px-3 py-1 rounded-full mt-2 shadow">
-                  Weeks 1–3 Starter Pack
+                  Sunday School Curriculum
                 </span>
                 <p className="text-purple-800 text-xs md:text-sm font-semibold mt-1">
-                  A Global Children's Curriculum System
+                  Raising Disciples of Jesus Christ
                 </p>
               </div>
             </div>
@@ -450,10 +450,10 @@ export default function Home() {
             {/* Feature icons */}
             <div className="grid grid-cols-4 gap-2">
               {[
-                { icon: "📖", label: "Teaching" },
-                { icon: "✏️", label: "Activities" },
-                { icon: "🎵", label: "Songs" },
-                { icon: "📺", label: "Videos" },
+                { icon: "✝️", label: "Bible Truth" },
+                { icon: "🙏", label: "Prayer" },
+                { icon: "🎵", label: "Worship" },
+                { icon: "📖", label: "Scripture" },
               ].map((f) => (
                 <div key={f.label} className="bg-white rounded-xl py-3 text-center shadow-sm">
                   <div className="text-2xl md:text-3xl">{f.icon}</div>
@@ -462,9 +462,13 @@ export default function Home() {
               ))}
             </div>
 
-            <p className="text-purple-900 text-xs md:text-sm font-black tracking-wide text-center">
-              Walking with Jesus Every Day
-            </p>
+            {/* Bible verse */}
+            <div className="bg-purple-800 bg-opacity-10 border-l-4 border-purple-700 rounded-xl px-4 py-3">
+              <p className="text-purple-900 text-xs md:text-sm font-bold italic leading-snug">
+                &ldquo;Train up a child in the way he should go, and when he is old he will not depart from it.&rdquo;
+              </p>
+              <p className="text-purple-600 text-xs font-black mt-1">— Proverbs 22:6</p>
+            </div>
           </div>
 
           {/* ──────── RIGHT COLUMN ──────── */}
@@ -477,16 +481,17 @@ export default function Home() {
               </div>
               <div className="flex-1 flex flex-col gap-3">
                 <div className="bg-purple-800 text-white rounded-2xl p-4 shadow-lg text-center">
+                  <p className="text-yellow-300 text-lg mb-1">✝</p>
                   <p className="text-xs md:text-sm font-black leading-snug">
-                    EVERYTHING YOU NEED TO<br />TEACH WITH CONFIDENCE ✓
+                    GROUNDED IN SCRIPTURE<br />POWERED BY THE HOLY SPIRIT ✓
                   </p>
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   {[
-                    { icon: "🎬", label: "Videos & Songs",   bg: "bg-orange-500" },
-                    { icon: "⚡", label: "Instant Access",   bg: "bg-green-600" },
-                    { icon: "🖨️", label: "Print Ready PDFs", bg: "bg-blue-600" },
-                    { icon: "📱", label: "Easy to Use",      bg: "bg-pink-600" },
+                    { icon: "✝️", label: "Bible-Based",       bg: "bg-orange-500" },
+                    { icon: "🙏", label: "Prayer & Worship", bg: "bg-green-600" },
+                    { icon: "📖", label: "Scripture Memory", bg: "bg-blue-600" },
+                    { icon: "❤️", label: "Christ-Centered",  bg: "bg-pink-600" },
                   ].map((b) => (
                     <div key={b.label} className={`${b.bg} text-white rounded-xl p-2.5 text-center shadow`}>
                       <div className="text-xl">{b.icon}</div>
@@ -499,12 +504,12 @@ export default function Home() {
 
             {/* What's inside */}
             <div className="bg-white rounded-2xl p-4 shadow">
-              <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-3">What&apos;s Inside Each Week</p>
+              <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-3">What&apos;s Inside Each Lesson</p>
               <div className="space-y-2">
                 {[
-                  { color: "bg-orange-500", label: "Teaching Sheet — Memory Verse + Bible Teaching" },
-                  { color: "bg-green-600",  label: "Video & Song — Engaging Visual Content" },
-                  { color: "bg-blue-600",   label: "Workbook — Activities & Life Application" },
+                  { color: "bg-orange-500", label: "Bible Teaching — Memory Verse + Scripture Study" },
+                  { color: "bg-green-600",  label: "Worship & Prayer — Songs + Guided Prayer Time" },
+                  { color: "bg-blue-600",   label: "Faith in Action — Activities & Life Application" },
                 ].map((item) => (
                   <div key={item.label} className="flex items-center gap-3">
                     <div className={`${item.color} w-3 h-3 rounded-full flex-shrink-0`} />
@@ -580,8 +585,11 @@ export default function Home() {
               </span>
             ))}
           </div>
-          <p className="text-gray-600 text-sm md:text-base font-semibold max-w-lg mx-auto">
-            Help children grow in faith and live like little disciples of Jesus!
+          <p className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-1">
+            Philippians 4:13 &nbsp;•&nbsp; Proverbs 22:6 &nbsp;•&nbsp; Matthew 28:19
+          </p>
+          <p className="text-gray-700 text-sm md:text-base font-semibold max-w-lg mx-auto">
+            Helping children know Jesus, love His Word, and live as His disciples.
           </p>
         </div>
       </div>
