@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --age-0-4: #f97316;
+  --age-5-9: #22c55e;
+  --age-10-12: #3b82f6;
+  --age-13-19: #ec4899;
+}
+
+@layer utilities {
+  .age-0-4 { background-color: #f97316; }
+  .age-5-9 { background-color: #22c55e; }
+  .age-10-12 { background-color: #3b82f6; }
+  .age-13-19 { background-color: #ec4899; }
+
+  .border-age-0-4 { border-color: #f97316; }
+  .border-age-5-9 { border-color: #22c55e; }
+  .border-age-10-12 { border-color: #3b82f6; }
+  .border-age-13-19 { border-color: #ec4899; }
+}
+
+@media print {
+  .no-print { display: none; }
+  .print-page { page-break-after: always; }
+}
