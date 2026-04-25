@@ -44,6 +44,10 @@ export async function getTeacherByEmail(db: D1Database, email: string) {
   return db.prepare("SELECT * FROM teachers WHERE email = ?").bind(email).first();
 }
 
+export async function getTeacherById(db: D1Database, id: string) {
+  return db.prepare("SELECT * FROM teachers WHERE id = ?").bind(id).first();
+}
+
 export async function getStudentsByTeacher(db: D1Database, teacherId: string) {
   return db
     .prepare("SELECT * FROM students WHERE teacher_id = ? ORDER BY name")
@@ -64,4 +68,36 @@ export async function createStudent(
     .bind(id, teacherId, name, ageGroup, magicToken)
     .run();
   return { id, magicToken };
+}
+
+export async function createChurch(db: D1Database, name: string): Promise<string> {
+  const id = crypto.randomUUID();
+  await db.prepare("INSERT INTO churches (id, name) VALUES (?, ?)").bind(id, name).run();
+  return id;
+}
+
+export async function createTeacher(
+  db: D1Database,
+  {
+    churchId,
+    name,
+    email,
+    passwordHash,
+    ageGroup,
+  }: {
+    churchId: string;
+    name: string;
+    email: string;
+    passwordHash: string;
+    ageGroup: string;
+  }
+): Promise<string> {
+  const id = crypto.randomUUID();
+  await db
+    .prepare(
+      "INSERT INTO teachers (id, church_id, name, email, password_hash, age_group) VALUES (?, ?, ?, ?, ?, ?)"
+    )
+    .bind(id, churchId, name, email, passwordHash, ageGroup)
+    .run();
+  return id;
 }

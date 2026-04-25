@@ -7,5 +7,4 @@ binding = "DB"
 database_name = "kss-db"
 database_id = "b95345e1-64cf-48fc-b821-f09676951b0a"
 
-[vars]
-JWT_SECRET = "change-me-in-production"
+# JWT_SECRET is stored as a Wrangler secret (not here)
