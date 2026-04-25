@@ -252,16 +252,12 @@ export default function Home() {
       <div className="md:hidden px-4 pt-5 pb-3">
         {/* Logo compact */}
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-14 h-14 bg-purple-800 rounded-2xl flex flex-col items-center justify-center shadow-xl flex-shrink-0">
-            <span className="text-yellow-300 text-xl leading-none">👑</span>
-            <span className="text-white text-xs font-black leading-none mt-0.5">LD</span>
-          </div>
+          <img src="/logo.jpg" alt="Little Disciples" className="w-20 h-12 object-cover rounded-xl shadow-xl flex-shrink-0" />
           <div>
-            <h1 className="text-2xl font-black text-purple-900 leading-tight">Little Disciples</h1>
-            <span className="inline-block bg-green-500 text-white text-xs font-bold px-2.5 py-0.5 rounded-full">
+            <span className="inline-block bg-green-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">
               Sunday School Curriculum
             </span>
-            <p className="text-purple-700 text-xs font-semibold mt-0.5">Raising Disciples of Jesus Christ</p>
+            <p className="text-purple-700 text-xs font-semibold mt-1">Raising Disciples of Jesus Christ</p>
           </div>
         </div>
 
@@ -307,15 +303,10 @@ export default function Home() {
             {/* Logo */}
             <div className="flex items-center gap-4">
               <div className="relative flex-shrink-0">
-                <div className="w-24 h-24 bg-purple-800 rounded-3xl flex flex-col items-center justify-center shadow-2xl">
-                  <span className="text-yellow-300 text-3xl leading-none">👑</span>
-                  <span className="text-white text-base font-black leading-none mt-1">LD</span>
-                </div>
-                <span className="sparkle absolute -top-2 -right-2 text-yellow-300 text-lg">✦</span>
+                <img src="/logo.jpg" alt="Little Disciples" className="w-36 h-20 object-cover rounded-2xl shadow-2xl" />
               </div>
               <div>
-                <h1 className="text-5xl font-black text-purple-900 leading-none tracking-tight">Little<br />Disciples</h1>
-                <span className="inline-block bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full mt-2 shadow">
+                <span className="inline-block bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
                   Sunday School Curriculum
                 </span>
                 <p className="text-purple-800 text-xs font-semibold mt-1">Raising Disciples of Jesus Christ</p>
