@@ -1,3 +1,5 @@
+"use client";
+import { useEffect, useState } from "react";
 import { MagicLinkView } from "@kss/types";
 
 const AGE_COLORS: Record<string, string> = {
@@ -7,19 +9,33 @@ const AGE_COLORS: Record<string, string> = {
   "13-19": "bg-pink-500",
 };
 
-async function getChildData(token: string): Promise<MagicLinkView | null> {
-  const apiUrl = process.env.API_URL ?? "http://localhost:8787";
-  try {
-    const res = await fetch(`${apiUrl}/child/${token}`, { cache: "no-store" });
-    if (!res.ok) return null;
-    return res.json();
-  } catch {
-    return null;
-  }
-}
+const AGE_BORDER: Record<string, string> = {
+  "0-4": "border-orange-500",
+  "5-9": "border-green-500",
+  "10-12": "border-blue-500",
+  "13-19": "border-pink-500",
+};
 
-export default async function ChildPage({ params }: { params: { token: string } }) {
-  const data = await getChildData(params.token);
+export default function ChildPage() {
+  const [data, setData] = useState<MagicLinkView | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const token = new URLSearchParams(window.location.search).get("token");
+    if (!token) { setLoading(false); return; }
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/child/${token}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => { setData(d); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return (
+      <main className="min-h-screen flex items-center justify-center">
+        <div className="text-orange-400 text-lg font-bold animate-pulse">Loading...</div>
+      </main>
+    );
+  }
 
   if (!data) {
     return (
@@ -34,6 +50,7 @@ export default async function ChildPage({ params }: { params: { token: string } 
 
   const { student, completions, currentLesson, currentWeek } = data;
   const colorClass = AGE_COLORS[student.ageGroup] ?? "bg-orange-500";
+  const borderClass = AGE_BORDER[student.ageGroup] ?? "border-orange-500";
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-yellow-50 to-white p-4 max-w-lg mx-auto">
@@ -44,7 +61,7 @@ export default async function ChildPage({ params }: { params: { token: string } 
       </div>
 
       {currentWeek && currentLesson && (
-        <div className="bg-white rounded-2xl shadow p-5 mb-6 border-l-4" style={{ borderColor: colorClass.replace("bg-", "") }}>
+        <div className={`bg-white rounded-2xl shadow p-5 mb-6 border-l-4 ${borderClass}`}>
           <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">This Week</p>
           <h2 className="text-xl font-bold text-gray-800 mt-1">{currentWeek.title}</h2>
 

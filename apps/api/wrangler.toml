@@ -5,7 +5,7 @@ compatibility_date = "2024-09-25"
 [[d1_databases]]
 binding = "DB"
 database_name = "kss-db"
-database_id = "REPLACE_WITH_YOUR_D1_ID"
+database_id = "b95345e1-64cf-48fc-b821-f09676951b0a"
 
 [vars]
 JWT_SECRET = "change-me-in-production"

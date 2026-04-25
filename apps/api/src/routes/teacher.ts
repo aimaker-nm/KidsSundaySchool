@@ -19,7 +19,7 @@ teacherRoutes.post("/students", async (c) => {
   if (!name || !ageGroup) return c.json({ error: "Name and age group required" }, 400);
 
   const { id, magicToken } = await createStudent(c.env.DB, teacherId, name, ageGroup);
-  const magicLink = `${c.req.header("Origin") ?? "https://kids-sunday-school.pages.dev"}/child/${magicToken}`;
+  const magicLink = `${c.req.header("Origin") ?? "https://kids-sunday-school.pages.dev"}/child?token=${magicToken}`;
   return c.json({ id, magicLink }, 201);
 });
 
