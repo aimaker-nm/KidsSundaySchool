@@ -1,0 +1,1 @@
+self.__SSG_MANIFEST=new Set(["\u002Flesson\u002F[weekId]\u002F[ageGroup]","\u002Flesson\u002F[weekId]\u002F[ageGroup]\u002Fteaching","\u002Flesson\u002F[weekId]\u002F[ageGroup]\u002Fvideo","\u002Flesson\u002F[weekId]\u002F[ageGroup]\u002Fworkbook"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()

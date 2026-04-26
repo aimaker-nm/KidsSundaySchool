@@ -23,9 +23,10 @@ lessonRoutes.get("/:weekId/:ageGroup", async (c) => {
 
   return c.json({
     ...lessonRow,
-    bible_teaching: JSON.parse(lessonRow.bible_teaching),
-    key_points:     JSON.parse(lessonRow.key_points),
-    workbook:       JSON.parse(lessonRow.workbook),
+    bible_teaching:  JSON.parse(lessonRow.bible_teaching),
+    key_points:      JSON.parse(lessonRow.key_points),
+    workbook:        JSON.parse(lessonRow.workbook),
+    teaching_extra:  JSON.parse(lessonRow.teaching_extra ?? "{}"),
   });
 });
 
