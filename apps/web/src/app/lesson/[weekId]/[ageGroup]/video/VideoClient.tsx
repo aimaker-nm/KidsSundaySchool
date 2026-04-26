@@ -6,7 +6,7 @@ export default function VideoClient() {
   const { weekId, ageGroup } = useParams<{ weekId: string; ageGroup: string }>();
   const router = useRouter();
   const [lesson, setLesson] = useState<any>(null);
-  const [week, setWeek] = useState<any>(null);
+  const [week,   setWeek]   = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const age = decodeURIComponent(ageGroup ?? "");
 
@@ -23,98 +23,116 @@ export default function VideoClient() {
     }).catch(() => setLoading(false));
   }, [weekId, age]);
 
-  if (loading) return <div className="min-h-screen bg-amber-50 flex items-center justify-center"><span className="text-orange-400 font-black animate-pulse">Loading…</span></div>;
-  if (!lesson || !week) return <div className="min-h-screen flex items-center justify-center"><button onClick={() => router.back()} className="text-blue-600 font-bold">← Back</button></div>;
+  if (loading) return (
+    <div className="min-h-screen bg-amber-50 flex items-center justify-center">
+      <span className="text-orange-400 font-black animate-pulse text-xl">Loading…</span>
+    </div>
+  );
+  if (!lesson || !week) return (
+    <div className="min-h-screen flex items-center justify-center">
+      <button onClick={() => router.back()} className="text-blue-600 font-bold">← Back</button>
+    </div>
+  );
 
   const ex = lesson.teaching_extra ?? {};
   const song = ex.song;
   const thinkLines: string[] = (ex.think_about_it ?? "").split("\n").filter(Boolean);
 
+  const videoId = lesson.youtube_url
+    ? (lesson.youtube_url.split("v=")[1] ?? lesson.youtube_url.split("/").pop())
+    : null;
+
   return (
     <div className="min-h-screen flex flex-col bg-white font-sans">
 
       {/* WEEK HEADER */}
-      <div className="bg-amber-300 py-2 px-4 flex items-center gap-3">
-        <button onClick={() => router.back()} className="text-gray-700 font-black text-xs bg-white bg-opacity-40 px-2 py-1 rounded-lg">←</button>
-        <p className="flex-1 text-center text-xs md:text-sm font-black text-gray-800 uppercase tracking-wider">
-          Week {weekId} — {week.title}
+      <div className="bg-amber-300 py-2.5 px-6 flex items-center gap-4">
+        <button onClick={() => router.back()}
+          className="text-gray-700 font-black text-xs bg-white bg-opacity-50 px-3 py-1.5 rounded-lg hover:bg-opacity-70 transition flex-shrink-0">
+          ← Back
+        </button>
+        <p className="flex-1 text-center text-sm md:text-base font-black text-gray-800 uppercase tracking-widest">
+          Week {weekId} – {week.title}
         </p>
       </div>
 
       {/* SUBTITLE */}
-      <div className="bg-orange-500 py-3 px-4 text-center">
-        <h1 className="text-sm md:text-xl font-black text-white uppercase tracking-widest">
+      <div className="bg-orange-500 py-3 px-6 text-center">
+        <h1 className="text-base md:text-2xl font-black text-white uppercase tracking-widest">
           Video &amp; Song (Age {age})
         </h1>
       </div>
 
-      {/* MAIN 2-COL */}
-      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 md:divide-x divide-gray-200 overflow-auto">
+      {/* FULL-WIDTH 2-COL */}
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 divide-x-0 md:divide-x divide-gray-200">
 
         {/* LEFT — Watch the Video */}
         <div className="flex flex-col border-b md:border-b-0 border-gray-100">
-          {/* Section header */}
-          <div className="bg-orange-400 text-white px-4 py-2 flex items-center gap-2">
-            <span className="text-base font-black">▶</span>
-            <span className="text-sm font-black uppercase tracking-wide">Watch the Video</span>
+
+          <div className="bg-orange-400 text-white px-6 py-3 flex items-center gap-3">
+            <span className="text-xl font-black">▶</span>
+            <span className="text-sm md:text-base font-black uppercase tracking-wide">Watch the Video</span>
           </div>
-          <div className="p-4 flex flex-col gap-3">
-            {/* TV */}
-            {lesson.youtube_url ? (
-              <div className="bg-gray-900 rounded-xl overflow-hidden aspect-video shadow-md">
-                <iframe
-                  src={`https://www.youtube.com/embed/${lesson.youtube_url.split("v=")[1] ?? lesson.youtube_url.split("/").pop()}`}
-                  className="w-full h-full" allowFullScreen title="Lesson video"
-                />
+
+          <div className="flex-1 p-6 md:p-8 flex flex-col gap-4">
+            {videoId ? (
+              <div className="rounded-2xl overflow-hidden shadow-lg aspect-video">
+                <iframe src={`https://www.youtube.com/embed/${videoId}`}
+                  className="w-full h-full" allowFullScreen title="Lesson video" />
               </div>
             ) : (
-              <div className="bg-gray-800 rounded-xl overflow-hidden shadow-md">
-                {/* TV frame */}
-                <div className="bg-gray-700 mx-auto my-3 rounded-lg flex items-center justify-center" style={{ aspectRatio: "4/3", maxHeight: 180 }}>
-                  <div className="text-center">
-                    <span className="text-5xl">📺</span>
-                    <p className="text-gray-300 text-xs mt-1 px-2 font-semibold">
-                      {ex.video_description ?? "Video coming soon"}
+              /* TV placeholder — styled like the curriculum */
+              <div className="rounded-2xl overflow-hidden shadow-lg bg-gray-800 flex flex-col">
+                <div className="flex-1 flex items-center justify-center p-8 min-h-[200px] md:min-h-[260px]">
+                  <div className="bg-gray-700 rounded-xl w-full h-full flex flex-col items-center justify-center p-6 min-h-[160px]">
+                    <span className="text-6xl md:text-8xl mb-4">📺</span>
+                    <p className="text-gray-300 text-sm md:text-base text-center font-semibold">
+                      {ex.video_description ?? "Video coming soon!"}
                     </p>
                   </div>
                 </div>
-                {/* QR placeholder */}
-                <div className="bg-gray-900 px-4 pb-3 flex items-center gap-3">
-                  <div className="w-12 h-12 bg-white rounded flex items-center justify-center flex-shrink-0">
-                    <span className="text-xl">⬛</span>
+                {/* QR code row */}
+                <div className="bg-gray-900 px-6 py-4 flex items-center gap-4">
+                  <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center flex-shrink-0">
+                    <span className="text-3xl">⬛</span>
                   </div>
-                  <p className="text-gray-400 text-xs">Scan to watch the video!</p>
+                  <div>
+                    <p className="text-gray-300 text-sm font-semibold">Scan to watch the video!</p>
+                    <p className="text-gray-500 text-xs mt-0.5">Ask your teacher for the link</p>
+                  </div>
                 </div>
               </div>
             )}
-            <p className="text-xs text-gray-600 font-semibold text-center italic">
+            <p className="text-sm md:text-base text-gray-600 font-semibold italic text-center">
               {ex.video_description}
             </p>
           </div>
 
-          {/* THINK ABOUT IT — bottom strip */}
-          <div className="mt-auto">
-            <div className="bg-amber-200 px-4 py-3">
-              <div className="flex items-start gap-2">
-                <span className="text-base">💡</span>
-                <div className="flex-1">
-                  <p className="text-xs font-black text-gray-800 uppercase tracking-wide mb-1">Think About It</p>
-                  {thinkLines.length === 1 ? (
-                    <div>
-                      <p className="text-xs text-gray-700 font-semibold">{thinkLines[0].replace(/^\d+\.\s*/,"")}</p>
-                      <div className="mt-1 border-b border-gray-400 border-dashed" />
-                    </div>
-                  ) : (
-                    <ol className="space-y-1.5">
-                      {thinkLines.map((q, i) => (
-                        <li key={i}>
-                          <p className="text-xs text-gray-700 font-semibold">{i + 1}. {q.replace(/^\d+\.\s*/,"")}</p>
-                          <div className="mt-0.5 border-b border-gray-400 border-dashed" />
-                        </li>
-                      ))}
-                    </ol>
-                  )}
-                </div>
+          {/* THINK ABOUT IT — amber strip at the bottom */}
+          <div className="bg-amber-200 px-6 py-4">
+            <div className="flex items-start gap-3">
+              <span className="text-xl flex-shrink-0 mt-0.5">💡</span>
+              <div className="flex-1">
+                <p className="text-xs md:text-sm font-black text-gray-800 uppercase tracking-widest mb-2">
+                  Think About It
+                </p>
+                {thinkLines.length === 1 ? (
+                  <div>
+                    <p className="text-sm md:text-base text-gray-700 font-semibold">{thinkLines[0].replace(/^\d+\.\s*/,"")}</p>
+                    <div className="mt-2 border-b-2 border-dashed border-gray-400" />
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {thinkLines.map((q, i) => (
+                      <div key={i}>
+                        <p className="text-sm md:text-base text-gray-700 font-semibold">
+                          {i+1}. {q.replace(/^\d+\.\s*/,"")}
+                        </p>
+                        <div className="mt-1 border-b-2 border-dashed border-gray-400" />
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -124,31 +142,40 @@ export default function VideoClient() {
         <div className="flex flex-col">
           {song ? (
             <>
-              {/* Song header */}
-              <div className="bg-amber-300 px-4 py-2 flex items-center gap-2">
-                <span className="text-base">🎵</span>
-                <span className="text-sm font-black text-gray-800 uppercase tracking-wide">Song: {song.title}</span>
-                <span className="text-base ml-auto">🎵</span>
+              <div className="bg-amber-300 px-6 py-3 flex items-center gap-3">
+                <span className="text-xl">🎵</span>
+                <span className="text-sm md:text-base font-black text-gray-800 uppercase tracking-wide">
+                  Song: {song.title}
+                </span>
+                <span className="text-xl ml-auto">🎵</span>
               </div>
-              <div className="p-4 flex-1">
+
+              <div className="flex-1 p-6 md:p-8 flex flex-col gap-6">
                 {/* Lyrics box */}
-                <div className="bg-yellow-50 border-2 border-amber-200 rounded-xl p-4 mb-4">
-                  {song.lyrics.split("\n").map((line: string, i: number) => (
-                    <p key={i} className={`text-sm leading-relaxed text-center ${
-                      line.startsWith("(") ? "text-orange-500 font-black" :
-                      line === "" ? "my-1" :
-                      "text-gray-800 font-semibold"
-                    }`}>
-                      {line || " "}
-                    </p>
-                  ))}
+                <div className="bg-yellow-50 border-2 border-amber-200 rounded-2xl p-6 shadow-sm">
+                  <div className="text-center space-y-1">
+                    {song.lyrics.split("\n").map((line: string, i: number) => (
+                      <p key={i} className={`leading-relaxed ${
+                        line.startsWith("(")
+                          ? "text-orange-500 font-black text-base md:text-lg"
+                          : line === ""
+                          ? "my-2"
+                          : "text-gray-800 font-semibold text-base md:text-lg"
+                      }`}>
+                        {line || " "}
+                      </p>
+                    ))}
+                  </div>
                 </div>
+
                 {/* Actions */}
                 <div className="space-y-3">
                   {song.actions?.map((a: string, i: number) => (
-                    <div key={i} className="flex items-center gap-3 bg-white border border-gray-100 rounded-xl px-4 py-2.5 shadow-sm">
-                      <span className="text-xl flex-shrink-0">{a.split(" ")[0]}</span>
-                      <span className="text-sm text-gray-700 font-semibold">{a.split(" ").slice(1).join(" ")}</span>
+                    <div key={i} className="flex items-center gap-4 bg-white border border-gray-100 rounded-2xl px-5 py-3 shadow-sm">
+                      <span className="text-2xl flex-shrink-0">{a.split(" ")[0]}</span>
+                      <span className="text-sm md:text-base text-gray-700 font-semibold">
+                        {a.split(" ").slice(1).join(" ")}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -156,22 +183,24 @@ export default function VideoClient() {
             </>
           ) : (
             <>
-              <div className="bg-blue-500 text-white px-4 py-2 flex items-center gap-2">
-                <span className="text-base">💬</span>
-                <span className="text-sm font-black uppercase tracking-wide">Discussion</span>
+              <div className="bg-blue-500 text-white px-6 py-3 flex items-center gap-3">
+                <span className="text-xl">💬</span>
+                <span className="text-sm md:text-base font-black uppercase tracking-wide">Discussion Guide</span>
               </div>
-              <div className="p-4 flex-1 space-y-3">
-                <div className="bg-blue-50 border border-blue-100 rounded-xl p-3">
+
+              <div className="flex-1 p-6 md:p-8 space-y-5">
+                <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4">
                   <p className="text-xs font-black text-blue-700 uppercase mb-1">After watching the video:</p>
-                  <p className="text-sm text-gray-700 italic">{ex.video_description}</p>
+                  <p className="text-sm md:text-base text-gray-700 italic leading-relaxed">{ex.video_description}</p>
                 </div>
                 {thinkLines.map((q, i) => (
-                  <div key={i} className="bg-white border border-gray-100 rounded-xl p-3 shadow-sm">
-                    <p className="text-xs font-black text-gray-500 mb-1">{i + 1}.</p>
-                    <p className="text-sm text-gray-800 font-semibold">{q.replace(/^\d+\.\s*/,"")}</p>
-                    <div className="mt-2 space-y-1">
-                      <div className="h-6 border-b border-dashed border-gray-200" />
-                      <div className="h-6 border-b border-dashed border-gray-200" />
+                  <div key={i} className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm">
+                    <p className="text-sm md:text-base font-bold text-gray-800 mb-3">
+                      {i+1}. {q.replace(/^\d+\.\s*/,"")}
+                    </p>
+                    <div className="space-y-2">
+                      <div className="h-8 border-b-2 border-dashed border-gray-200" />
+                      <div className="h-8 border-b-2 border-dashed border-gray-200" />
                     </div>
                   </div>
                 ))}
@@ -182,8 +211,8 @@ export default function VideoClient() {
       </div>
 
       {/* FOOTER */}
-      <div className="bg-amber-300 py-2 px-4 text-center">
-        <p className="text-xs font-bold text-gray-700">Little Disciples – Walking with Jesus Every Day</p>
+      <div className="bg-amber-300 py-2 px-6 text-center">
+        <p className="text-sm font-bold text-gray-700">Little Disciples – Walking with Jesus Every Day</p>
       </div>
     </div>
   );
