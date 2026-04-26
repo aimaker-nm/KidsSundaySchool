@@ -109,16 +109,19 @@ export default function LessonClient() {
     <div className="min-h-screen flex flex-col bg-white font-sans">
 
       {/* ════════════════════════════════════════
-          WEEK HEADER
+          WEEK HEADER — age shown once here only
       ════════════════════════════════════════ */}
       <div className="bg-amber-300 py-2.5 px-6 flex items-center gap-4 sticky top-0 z-10 shadow-sm">
         <button onClick={() => router.push("/dashboard")}
           className="text-gray-700 font-black text-xs bg-white bg-opacity-50 px-3 py-1.5 rounded-lg hover:bg-opacity-70 transition flex-shrink-0">
           ← Dashboard
         </button>
-        <p className="flex-1 text-center text-sm md:text-base font-black text-gray-800 uppercase tracking-widest">
-          Week {weekId} – {week.title}
-        </p>
+        <div className="flex-1 text-center">
+          <p className="text-xs md:text-sm font-black text-gray-800 uppercase tracking-widest leading-tight">
+            Week {weekId} – {week.title}
+          </p>
+          <p className="text-xs font-semibold text-gray-600 mt-0.5">Ages {age}</p>
+        </div>
         {/* Jump nav */}
         <div className="hidden md:flex items-center gap-2">
           {["#teaching","#video","#workbook"].map((h,i) => (
@@ -134,7 +137,7 @@ export default function LessonClient() {
           SECTION 1 — TEACHING OUTLINE
       ════════════════════════════════════════ */}
       <div id="teaching">
-        <PageDivider label={`Teaching Outline (Age ${age})`} />
+        <PageDivider label="Teaching Outline" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 divide-x-0 md:divide-x divide-gray-200">
 
@@ -220,7 +223,7 @@ export default function LessonClient() {
           SECTION 2 — VIDEO & SONG
       ════════════════════════════════════════ */}
       <div id="video" className="border-t-4 border-gray-200">
-        <PageDivider label={`Video & Song (Age ${age})`} />
+        <PageDivider label="Video & Song" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 divide-x-0 md:divide-x divide-gray-200">
 
@@ -344,7 +347,7 @@ export default function LessonClient() {
           SECTION 3 — WORKBOOK
       ════════════════════════════════════════ */}
       <div id="workbook" className="border-t-4 border-gray-200">
-        <PageDivider label={`Workbook / Activities (Age ${age})`} />
+        <PageDivider label="Workbook / Activities" />
 
         {is04 ? (
           <div className="grid grid-cols-2 divide-x divide-y divide-gray-200">
